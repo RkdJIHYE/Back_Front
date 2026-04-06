@@ -1,7 +1,8 @@
 export function fetchApi(url: string, options?: RequestInit) {
+
     options = options || {};
     options.credentials = "include";
-    
+
     if (options?.body) {
         const headers = new Headers(options.headers || {});
         headers.set("Content-Type", "application/json");
@@ -18,3 +19,8 @@ export function fetchApi(url: string, options?: RequestInit) {
         }
     )
 }
+
+export type FetchCallbacks = {
+    onSuccess?: (data: any) => void;
+    onError?: (err: any) => void;
+};
