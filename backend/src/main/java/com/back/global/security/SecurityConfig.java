@@ -32,9 +32,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/members/login", "/api/v1/members/join").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/members/logout").permitAll()
                         .requestMatchers("/api/v1/adm/**").hasRole("ADMIN")
-                        .requestMatchers("/api/*/**").authenticated()
-                        .anyRequest().authenticated())
-                .csrf(( csrf) -> csrf.disable())
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll())
+                .csrf((csrf) -> csrf.disable())
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
@@ -64,17 +64,19 @@ public class SecurityConfig {
                                                                 }
                                                             """);
                                         }
-                                ));;
+                                ));
+        ;
 
         return http.build();
     }
 
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration =new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("https://cdpn.io", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+
         configuration.setAllowedHeaders(List.of("*"));
 
         configuration.setAllowCredentials(true);
