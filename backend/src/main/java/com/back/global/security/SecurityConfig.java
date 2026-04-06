@@ -43,7 +43,7 @@ public class SecurityConfig {
                         exceptionHandling -> exceptionHandling
                                 .authenticationEntryPoint((request, response, authenticationException) -> {
 
-                                    response.setContentType("application/json");
+                                    response.setContentType("application/json; charset=UTF-8");
                                     response.setStatus(401);
                                     response.getWriter().write(
                                             """
@@ -54,7 +54,7 @@ public class SecurityConfig {
                                                     """);
                                 })
                                 .accessDeniedHandler((request, response, accessDeniedException) -> {
-                                            response.setContentType("application/json");
+                                            response.setContentType("application/json; charset=UTF-8");
                                             response.setStatus(403);
                                             response.getWriter().write(
                                                     """
@@ -75,7 +75,6 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of("https://cdpn.io", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-
         configuration.setAllowedHeaders(List.of("*"));
 
         configuration.setAllowCredentials(true);
